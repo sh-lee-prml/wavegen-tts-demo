@@ -1,0 +1,5 @@
+.nfe-badge{display:inline-flex;align-items:center;justify-content:center;flex:none;white-space:nowrap;padding:2px 7px;border:1px solid #dce3ee;border-radius:4px;background:#f3f6fa;color:#586b83;font:600 10px/1.5 system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.1px}
+.model-name:has(.nfe-badge){display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.model-card .nfe-badge,.model-chip .nfe-badge,.metric-model-label .nfe-badge{color:var(--accent,#586b83);border-color:color-mix(in srgb,var(--accent,#586b83) 21%,white);background:color-mix(in srgb,var(--accent,#586b83) 6%,white)}
+.model-checkpoint{display:inline-flex;align-items:center;padding:2px 7px;border:1px solid #e2e7ee;border-radius:4px;background:#f7f9fc;color:#677990;font:600 10px/1.5 system-ui,sans-serif;font-variant-numeric:tabular-nums;letter-spacing:.1px}
+.table-config:empty,.run-summary:empty{display:none}

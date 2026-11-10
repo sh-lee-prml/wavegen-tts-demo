@@ -1,0 +1,1 @@
+.sample-status{display:flex;align-items:center;gap:14px;padding:12px 15px;margin:0 0 14px;border:1px solid #dfe5ee;border-radius:6px;background:#fff;color:#68778b;font-size:12px}.sample-status[hidden]{display:none}.sample-status .text-button{color:#4564d9}.model-grid[aria-busy=true]{opacity:.55}.play-button[aria-busy=true]{opacity:.8}

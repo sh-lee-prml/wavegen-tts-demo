@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f7fa">
+  <title>WaveGen - Zero-shot TTS Benchmark</title>
+  <link rel="stylesheet" href="styles.css?v=583bc9a58e005483">
+  <link rel="stylesheet" href="model-badges.css?v=d28adf0b2f9e9280">
+  <link rel="stylesheet" href="loading.css?v=3895d05d1dbe79b8">
+  <script src="catalog.js?v=ee58ae07510441e7" defer></script>
+  <script src="media-store.js?v=26ed574143e11fef" defer></script>
+  <script src="app.js?v=5fd44cfd73bc83bb" defer></script>
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span><h1 id="page-title">WaveGen - Zero-shot TTS Benchmark</h1></a>
+    <div class="header-meta"><span id="dataset-label">Seed-TTS test · EN</span><span class="meta-divider" aria-hidden="true"></span><span><b id="sample-total">—</b> audio samples</span><span><b id="model-total">—</b> models</span></div>
+  </header>
+  <main>
+    <div id="fatal-error" class="fatal-error" role="alert" hidden></div>
+    <section class="comparison-setup" id="comparison-setup" aria-labelledby="models-title">
+      <div class="setup-heading"><div><h2 id="models-title">Models</h2><span id="selection-count" class="selection-count" aria-live="polite"></span></div><div class="setup-actions"><button type="button" id="models-all" class="text-button">Select all</button><button type="button" id="models-clear" class="text-button">Clear</button><button type="button" id="comparison-reset" class="text-button">Reset view</button></div></div>
+      <div id="model-selection" class="model-selection" role="group" aria-label="Models to compare"></div>
+    </section>
+    <section id="metrics-section" class="metrics-section" aria-labelledby="metrics-title" hidden>
+      <div class="metrics-heading"><div><h2 id="metrics-title">Model rankings</h2><p id="ranking-context" class="ranking-context"></p></div><div class="ranking-controls"><label for="ranking-scope">Scope<select id="ranking-scope"><option value="overall">Benchmark · 1,088 samples</option><option value="sample">Current sample</option></select></label><label for="ranking-metric">Rank by<select id="ranking-metric"><option value="wer">WER · Low to high</option><option value="sim">SIM · High to low</option><option value="utmos">UTMOS · High to low</option><option value="default" selected>Default model order</option></select></label></div></div>
+      <div class="metrics-table-wrap">
+        <table class="metrics-table" aria-describedby="ranking-footnote">
+          <caption id="ranking-caption" class="visually-hidden">Model rankings</caption>
+          <thead><tr><th scope="col" id="rank-column">Rank</th><th scope="col">Model / configuration</th><th scope="col" id="metric-wer" title="Word error rate; lower is better">WER ↓</th><th scope="col" id="metric-sim" title="Speaker similarity; higher is better">SIM ↑</th><th scope="col" id="metric-utmos" title="Predicted speech quality; higher is better">UTMOS ↑</th><th scope="col" class="metric-count-column">Samples</th></tr></thead>
+          <tbody id="metrics-table-body"></tbody>
+        </table>
+      </div>
+      <p class="visually-hidden" id="ranking-footnote">Ranks use the selected models. Ties share a rank; unavailable scores appear last.</p>
+    </section>
+    <div class="workspace" id="workspace">
+      <aside class="library" id="sample-library" aria-labelledby="library-title">
+        <div class="library-heading"><h2 id="library-title">Samples</h2><span class="small-count" id="library-count">0</span><button id="sample-picker-toggle" class="text-button sample-picker-toggle" type="button" aria-expanded="true" aria-controls="sample-picker-content">Choose sample</button></div>
+        <div class="picker-summary" id="picker-summary"></div>
+        <div id="sample-picker-content">
+        <label class="search-box"><svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 4.5 4.5"/></svg><input id="search" type="search" placeholder="Search text or ID" aria-label="Search sample text or ID" autocomplete="off"></label>
+        <div class="library-filters"><button id="show-all" type="button" class="filter-button active" aria-pressed="true">All samples</button><button id="show-favorites" type="button" class="filter-button" aria-pressed="false">Favorites <span id="favorite-count">0</span></button></div>
+        <div id="sample-list" class="sample-list" aria-label="Sample list"></div>
+        <div id="empty-list" class="empty-list" hidden>No matching samples.</div>
+        <nav class="pagination" aria-label="Sample pages"><button id="page-prev" class="icon-button" type="button" aria-label="Previous page">←</button><span id="page-info">1 / 1</span><button id="page-next" class="icon-button" type="button" aria-label="Next page">→</button></nav>
+        </div>
+      </aside>
+      <section class="listening-area" aria-label="Audio comparison">
+        <div class="listening-toolbar">
+          <div class="listening-title"><h2>Listen & compare</h2><span id="card-order" class="card-order"></span></div>
+          <div class="toolbar-actions"><label class="speed-control" for="playback-speed"><span>Speed</span><select id="playback-speed" aria-label="Playback speed for all audio"><option value="0.75">0.75×</option><option value="1" selected>1.0×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select></label><button type="button" class="text-button shuffle-button" id="random-sample" title="Choose a random sample"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 6h3c5 0 5 12 10 12h3M17 15l3 3-3 3M4 18h3c2 0 3-2 4-4m2-4c1-2 2-4 4-4h3m-3-3 3 3-3 3"/></svg><span>Random</span></button></div>
+        </div>
+        <article class="transcript-card">
+          <div class="transcript-heading"><div class="sample-label"><span id="language-badge" class="language-badge">EN</span><span id="selected-id"></span></div><button id="favorite-toggle" class="icon-button favorite-toggle" type="button" aria-label="Add current sample to favorites" aria-pressed="false" title="Toggle favorite">☆</button></div>
+          <p id="transcript" class="transcript"></p>
+          <div class="transcript-footer"><div class="sample-share"><span class="text-label">Target text</span><button id="copy-sample-link" type="button" class="text-button">Copy sample link</button></div><div class="sample-navigation"><span id="selected-position"></span><button id="sample-prev" type="button" class="icon-button" aria-label="Previous sample">←</button><button id="sample-next" type="button" class="icon-button" aria-label="Next sample">→</button></div></div>
+          <div id="sample-link-fallback" class="sample-link-fallback" hidden><label for="sample-link-value">Sample link</label><input id="sample-link-value" type="text" readonly><span>Copy this link to share the current sample and model selection.</span><button id="sample-link-close" type="button" class="text-button">Close</button></div>
+          <details class="prompt-details" id="prompt-details" hidden><summary>Reference transcript</summary><p id="prompt-text"></p></details>
+        </article>
+        <div id="sample-status" class="sample-status" role="status" hidden><span id="sample-status-text"></span><button id="sample-retry" class="text-button" type="button" hidden>Retry</button></div>
+        <article class="prompt-player" id="prompt-player" aria-label="Reference prompt audio" hidden></article>
+        <div id="empty-models" class="empty-models" hidden><h3>No models selected</h3><p>Choose models above to compare their audio and scores.</p><button type="button" id="empty-models-all" class="primary-button">Select all models</button></div>
+        <div class="model-grid" id="model-grid"></div>
+        <details class="notes-disclosure"><summary>Listening notes</summary><section class="notes-section" aria-label="Listening notes"><div class="notes-heading"><label for="listening-note">Notes for this sample</label><span id="note-status" aria-live="polite"></span></div><textarea id="listening-note" rows="2" placeholder="Add a listening note…" maxlength="10000"></textarea><div class="notes-bottom"><span>Saved in this browser</span><button type="button" id="export-notes" class="text-button">Export notes ↗</button></div></section></details>
+      </section>
+    </div>
+    <div hidden><span id="audio-total"></span><span id="run-total"></span><span id="collection-summary"></span></div>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <noscript><p class="fatal-error">Enable JavaScript to use the audio comparison.</p></noscript>
+</body>
+</html>
+

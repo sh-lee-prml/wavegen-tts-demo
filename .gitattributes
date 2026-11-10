@@ -1,0 +1,3 @@
+# Preserve bytes used by content hashes on every platform.
+* -text
+*.wav binary
